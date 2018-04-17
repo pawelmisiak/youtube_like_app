@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import _ from 'lodash';
 import YTSearch from 'youtube-api-search';
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
@@ -31,9 +32,11 @@ class App extends Component  {
   }
 
   render(){
+    // function for lodash to throttle (slow down) the input
+    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 500);
     return (
       <div>
-        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+        <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo} />
         {/* passing props to the child */}
         <VideoList
