@@ -17,20 +17,23 @@ class App extends Component  {
       videos: [],
       selectedVideo: null,
     };
+    this.videoSearch('surfboards');
+  }
 
+  videoSearch(term) {
     // fat arrow is the same as this.setState({videos: videos})
-    YTSearch({ key: API_KEY, term: 'surfboards' }, (videos) => {
+    YTSearch({ key: API_KEY, term: term }, (videos) => {
       this.setState({
-      videos: videos,
-      selectedVideo: videos[0],
-     });
+        videos: videos,
+        selectedVideo: videos[0],
+      });
     });
   }
 
   render(){
     return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
         <VideoDetail video={this.state.selectedVideo} />
         {/* passing props to the child */}
         <VideoList
